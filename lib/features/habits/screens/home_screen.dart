@@ -30,7 +30,8 @@ class HomeScreen extends ConsumerWidget {
             ? const EmptyState(
                 icon: Icons.add_task,
                 title: 'Create your first habit',
-                message: 'Start small. Track one thing today and build from there.',
+                message:
+                    'Start small. Track one thing today and build from there.',
               )
             : ListView.separated(
                 padding: const EdgeInsets.fromLTRB(16, 8, 16, 96),
