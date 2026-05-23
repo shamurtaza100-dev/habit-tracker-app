@@ -118,8 +118,10 @@ class StatisticsScreen extends ConsumerWidget {
             barRods: [
               BarChartRodData(
                 toY: state.completions
-                    .where((completion) =>
-                        isSameDate(completion.completedDate, days[index]))
+                    .where(
+                      (completion) =>
+                          isSameDate(completion.completedDate, days[index]),
+                    )
                     .length
                     .toDouble(),
                 width: 7,

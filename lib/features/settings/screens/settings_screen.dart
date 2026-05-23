@@ -9,10 +9,10 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Settings')),
       body: ListView(
         padding: const EdgeInsets.all(16),
-        children: [
+        children: const [
           Card(
             child: Column(
-              children: const [
+              children: [
                 _SettingsTile(
                   icon: Icons.dark_mode_outlined,
                   title: 'Dark mode',

@@ -18,7 +18,7 @@ class _AddHabitScreenState extends ConsumerState<AddHabitScreen> {
   final _descriptionController = TextEditingController();
   HabitFrequency _frequency = HabitFrequency.daily;
   TimeOfDay? _reminderTime;
-  int _selectedColor = const Color(0xFF4F46E5).value;
+  int _selectedColor = const Color(0xFF4F46E5).toARGB32();
   String _selectedIcon = 'star';
 
   static const _colors = [
@@ -136,9 +136,10 @@ class _AddHabitScreenState extends ConsumerState<AddHabitScreen> {
             Wrap(
               spacing: 12,
               children: _colors.map((color) {
-                final selected = color.value == _selectedColor;
+                final selected = color.toARGB32() == _selectedColor;
                 return InkWell(
-                  onTap: () => setState(() => _selectedColor = color.value),
+                  onTap: () =>
+                      setState(() => _selectedColor = color.toARGB32()),
                   borderRadius: BorderRadius.circular(999),
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 180),

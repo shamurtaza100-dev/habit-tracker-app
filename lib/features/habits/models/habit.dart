@@ -58,10 +58,10 @@ class Habit {
 }
 
 class HabitAdapter extends TypeAdapter<Habit> {
-  static const typeId = 1;
+  static const hiveTypeId = 1;
 
   @override
-  int get typeId => HabitAdapter.typeId;
+  int get typeId => HabitAdapter.hiveTypeId;
 
   @override
   Habit read(BinaryReader reader) {

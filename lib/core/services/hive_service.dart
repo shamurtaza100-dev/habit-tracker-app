@@ -13,10 +13,10 @@ class HiveService {
   static Future<void> init() async {
     await Hive.initFlutter();
 
-    if (!Hive.isAdapterRegistered(HabitAdapter.typeId)) {
+    if (!Hive.isAdapterRegistered(HabitAdapter.hiveTypeId)) {
       Hive.registerAdapter(HabitAdapter());
     }
-    if (!Hive.isAdapterRegistered(HabitCompletionAdapter.typeId)) {
+    if (!Hive.isAdapterRegistered(HabitCompletionAdapter.hiveTypeId)) {
       Hive.registerAdapter(HabitCompletionAdapter());
     }
 

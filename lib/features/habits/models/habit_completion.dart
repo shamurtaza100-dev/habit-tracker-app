@@ -13,10 +13,10 @@ class HabitCompletion {
 }
 
 class HabitCompletionAdapter extends TypeAdapter<HabitCompletion> {
-  static const typeId = 2;
+  static const hiveTypeId = 2;
 
   @override
-  int get typeId => HabitCompletionAdapter.typeId;
+  int get typeId => HabitCompletionAdapter.hiveTypeId;
 
   @override
   HabitCompletion read(BinaryReader reader) {
