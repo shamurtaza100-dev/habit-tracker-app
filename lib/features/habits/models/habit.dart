@@ -11,6 +11,16 @@ enum HabitFrequency {
       };
 }
 
+enum HabitReminderInterval {
+  daily,
+  hourly;
+
+  String get label => switch (this) {
+        HabitReminderInterval.daily => 'Daily',
+        HabitReminderInterval.hourly => 'Hourly',
+      };
+}
+
 class Habit {
   const Habit({
     required this.id,
@@ -21,6 +31,7 @@ class Habit {
     required this.icon,
     required this.createdAt,
     this.reminderTime,
+    this.reminderInterval = HabitReminderInterval.daily,
     this.isArchived = false,
   });
 
@@ -29,6 +40,7 @@ class Habit {
   final String description;
   final HabitFrequency frequency;
   final TimeOfDay? reminderTime;
+  final HabitReminderInterval reminderInterval;
   final int color;
   final String icon;
   final DateTime createdAt;
@@ -39,6 +51,7 @@ class Habit {
     String? description,
     HabitFrequency? frequency,
     TimeOfDay? reminderTime,
+    HabitReminderInterval? reminderInterval,
     int? color,
     String? icon,
     bool? isArchived,
@@ -49,6 +62,7 @@ class Habit {
       description: description ?? this.description,
       frequency: frequency ?? this.frequency,
       reminderTime: reminderTime ?? this.reminderTime,
+      reminderInterval: reminderInterval ?? this.reminderInterval,
       color: color ?? this.color,
       icon: icon ?? this.icon,
       createdAt: createdAt,
@@ -89,13 +103,15 @@ class HabitAdapter extends TypeAdapter<Habit> {
       icon: fields[6] as String,
       createdAt: fields[7] as DateTime,
       isArchived: fields[8] as bool? ?? false,
+      reminderInterval: HabitReminderInterval
+          .values[fields[9] as int? ?? HabitReminderInterval.daily.index],
     );
   }
 
   @override
   void write(BinaryWriter writer, Habit obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -117,6 +133,8 @@ class HabitAdapter extends TypeAdapter<Habit> {
       ..writeByte(7)
       ..write(obj.createdAt)
       ..writeByte(8)
-      ..write(obj.isArchived);
+      ..write(obj.isArchived)
+      ..writeByte(9)
+      ..write(obj.reminderInterval.index);
   }
 }

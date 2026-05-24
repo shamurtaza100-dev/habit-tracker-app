@@ -10,6 +10,9 @@ Future<void> main() async {
 
   await HiveService.init();
   await NotificationService.instance.init();
+  await NotificationService.instance.scheduleHabitReminders(
+    HiveService.habitsBox.values.where((habit) => !habit.isArchived),
+  );
 
   runApp(
     const ProviderScope(

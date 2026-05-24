@@ -115,7 +115,7 @@ class HabitCard extends StatelessWidget {
     final parts = [
       habit.frequency.label,
       if (habit.reminderTime != null)
-        DateFormat.jm().format(
+        '${habit.reminderInterval.label} reminder at ${DateFormat.jm().format(
           DateTime(
             2024,
             1,
@@ -123,7 +123,7 @@ class HabitCard extends StatelessWidget {
             habit.reminderTime!.hour,
             habit.reminderTime!.minute,
           ),
-        ),
+        )}',
     ];
 
     return parts.join(' • ');

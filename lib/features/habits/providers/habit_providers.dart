@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../core/services/hive_service.dart';
+import '../../../core/services/notification_service.dart';
 import '../../../core/utils/date_utils.dart';
 import '../models/habit.dart';
 import '../models/habit_completion.dart';
@@ -109,6 +110,7 @@ class HabitController extends StateNotifier<HabitState> {
     required String description,
     required HabitFrequency frequency,
     required TimeOfDay? reminderTime,
+    required HabitReminderInterval reminderInterval,
     required int color,
     required String icon,
   }) async {
@@ -118,17 +120,20 @@ class HabitController extends StateNotifier<HabitState> {
       description: description,
       frequency: frequency,
       reminderTime: reminderTime,
+      reminderInterval: reminderInterval,
       color: color,
       icon: icon,
       createdAt: DateTime.now(),
     );
 
     await _repository.addHabit(habit);
+    await NotificationService.instance.scheduleHabitReminder(habit);
     _refresh();
   }
 
   Future<void> archiveHabit(String habitId) async {
     await _repository.archiveHabit(habitId);
+    await NotificationService.instance.cancelHabitReminder(habitId);
     _refresh();
   }
 

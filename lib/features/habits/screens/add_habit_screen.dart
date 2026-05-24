@@ -18,6 +18,7 @@ class _AddHabitScreenState extends ConsumerState<AddHabitScreen> {
   final _descriptionController = TextEditingController();
   HabitFrequency _frequency = HabitFrequency.daily;
   TimeOfDay? _reminderTime;
+  HabitReminderInterval _reminderInterval = HabitReminderInterval.daily;
   int _selectedColor = const Color(0xFF4F46E5).toARGB32();
   String _selectedIcon = 'star';
 
@@ -86,6 +87,11 @@ class _AddHabitScreenState extends ConsumerState<AddHabitScreen> {
               ),
             ),
             const SizedBox(height: 18),
+            Text(
+              'Habit frequency',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 10),
             SegmentedButton<HabitFrequency>(
               segments: HabitFrequency.values
                   .map(
@@ -114,6 +120,37 @@ class _AddHabitScreenState extends ConsumerState<AddHabitScreen> {
                 onPressed: _pickReminder,
                 child: const Text('Set'),
               ),
+            ),
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 180),
+              child: _reminderTime == null
+                  ? const SizedBox.shrink()
+                  : Column(
+                      key: const ValueKey('reminder-interval'),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const SizedBox(height: 10),
+                        Text(
+                          'Reminder repeats',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 10),
+                        SegmentedButton<HabitReminderInterval>(
+                          segments: HabitReminderInterval.values
+                              .map(
+                                (interval) => ButtonSegment(
+                                  value: interval,
+                                  label: Text(interval.label),
+                                ),
+                              )
+                              .toList(),
+                          selected: {_reminderInterval},
+                          onSelectionChanged: (selection) {
+                            setState(() => _reminderInterval = selection.first);
+                          },
+                        ),
+                      ],
+                    ),
             ),
             const SizedBox(height: 10),
             Text('Icon', style: Theme.of(context).textTheme.titleMedium),
@@ -200,6 +237,7 @@ class _AddHabitScreenState extends ConsumerState<AddHabitScreen> {
           description: _descriptionController.text.trim(),
           frequency: _frequency,
           reminderTime: _reminderTime,
+          reminderInterval: _reminderInterval,
           color: _selectedColor,
           icon: _selectedIcon,
         );
